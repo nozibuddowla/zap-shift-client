@@ -1,146 +1,121 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Logo from "../../../components/Logo/Logo";
 import { NavLink } from "react-router";
 import { FiArrowUpRight } from "react-icons/fi";
+import { HiOutlineMenuAlt4, HiX } from "react-icons/hi";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
+  const linkItems = [
+    "Services",
+    "Coverage",
+    "About Us",
+    "Pricing",
+    "Blog",
+    "Contact",
+  ];
+
   const links = (
     <>
-      <li>
-        <NavLink
-          to="/services"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-bold"
-              : "hover:text-accent transition-colors"
-          }
-        >
-          Services
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/coverage"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-bold"
-              : "hover:text-accent transition-colors"
-          }
-        >
-          Coverage
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/about"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-bold"
-              : "hover:text-accent transition-colors"
-          }
-        >
-          About Us
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/pricing"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-bold"
-              : "hover:text-accent transition-colors"
-          }
-        >
-          Pricing
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/blog"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-bold"
-              : "hover:text-accent transition-colors"
-          }
-        >
-          Blog
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/contact"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-bold"
-              : "hover:text-accent transition-colors"
-          }
-        >
-          Contact
-        </NavLink>
-      </li>
+      {linkItems.map((item) => (
+        <li key={item}>
+          <NavLink
+            to={`/${item.toLowerCase().replace(/\s+/g, "")}`}
+            onClick={closeDropdown}
+            className={({ isActive }) =>
+              isActive
+                ? "text-primary font-bold bg-transparent!"
+                : "hover:text-accent bg-transparent!"
+            }
+          >
+            {item}
+          </NavLink>
+        </li>
+      ))}
     </>
   );
+
   return (
     <header className="sticky top-0 z-50 w-full py-4 px-2 md:px-0">
-      <div className="navbar bg-white/90 backdrop-blur-md rounded-2xl md:rounded-full shadow-sm border border-gray-100 px-4 md:px-8">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow-lg border border-gray-100"
+      <div className="navbar bg-white/90 backdrop-blur-md rounded-2xl md:rounded-full shadow-sm border border-gray-100 px-2 sm:px-4 md:px-8 max-w-7xl mx-auto">
+        {/* START: Menu & Logo */}
+        <div className="navbar-start flex items-center gap-1">
+          <div className="lg:hidden" ref={dropdownRef}>
+            <button
+              className="btn btn-ghost btn-circle btn-sm sm:btn-md"
+              onClick={toggleMenu}
             >
-              {" "}
-              {links}{" "}
-            </ul>
+              <div className="relative w-6 h-6 flex items-center justify-center">
+                {isOpen ? (
+                  <HiX size={24} className="text-secondary" />
+                ) : (
+                  <HiOutlineMenuAlt4 size={24} className="text-secondary" />
+                )}
+              </div>
+            </button>
+
+            {/* Menu List */}
+            {isOpen && (
+              <ul className="absolute left-0 top-full mt-4 w-52 p-4 bg-white rounded-2xl shadow-2xl border border-gray-100 z-60 animate-in fade-in zoom-in duration-200">
+                {links}
+              </ul>
+            )}
           </div>
+
           {/* Brand Logo */}
           <NavLink
             to="/"
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            className="flex items-center hover:opacity-80 transition-opacity"
           >
-            {" "}
-            <Logo />{" "}
+            <Logo />
           </NavLink>
         </div>
 
+        {/* CENTER: Desktop Menu */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-2 font-medium text-gray-600">
-            {" "}
-            {links}{" "}
+            {links}
           </ul>
         </div>
 
-        <div className="navbar-end gap-3">
+        <div className="navbar-end gap-1 sm:gap-3">
           <NavLink
             to="/signin"
-            className="btn btn-outline rounded-full px-6 hidden sm:flex border-none"
+            className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 hidden sm:flex border-none"
           >
             Sign In
           </NavLink>
           <NavLink
             to="/be-a-rider"
-            className="btn btn-primary text-dark-gray rounded-full px-6 flex items-center gap-2 shadow-md hover:shadow-lg transition-all border-none"
+            className="btn btn-primary btn-sm sm:btn-md text-dark-gray rounded-full px-3 sm:px-6 flex items-center gap-2 shadow-md border-none"
           >
-            Be a rider
+            <span className="hidden xs:block">Be a rider</span>
+            <span className="xs:hidden">Join</span>{" "}
+            {/* Shorter text for tiny phones */}
             <div className="bg-secondary rounded-full p-1 group">
-              <FiArrowUpRight className="text-primary" size={14} />
+              <FiArrowUpRight className="text-primary" size={12} />
             </div>
           </NavLink>
         </div>
