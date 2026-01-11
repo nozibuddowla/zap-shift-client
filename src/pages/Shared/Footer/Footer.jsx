@@ -28,7 +28,7 @@ const Footer = () => {
     </>
   );
   return (
-    <footer className="bg-secondary text-light-gray p-6 sm:p-10 rounded-4xl sm:rounded-[3rem] mx-4 mb-8 flex flex-col items-center text-center space-y-4">
+    <footer className="bg-secondary text-light-gray p-4 sm:p-6 lg:p-10 rounded-4xl sm:rounded-[3rem] mx-4 mb-8 flex flex-col items-center text-center space-y-4">
       <div className="flex flex-col items-center">
         <Logo />
         <p className="max-w-md sm:max-w-2xl mt-4 text-sm sm:text-base opacity-70 leading-relaxed">

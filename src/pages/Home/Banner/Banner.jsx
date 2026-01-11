@@ -26,7 +26,7 @@ const slides = [
 
 const Banner = () => {
   return (
-    <div>
+    <div className="w-full">
       <Swiper
         // Infinite Loop & Autoplay
         loop={true}
@@ -46,10 +46,10 @@ const Banner = () => {
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <div
-              className="w-full aspect-video md:aspect-21/9 lg:min-h-137.5 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-in-out"
+              className="w-full aspect-4/3 sm:aspect-video md:aspect-21/9 bg-contain md:bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-in-out"
               style={{ backgroundImage: `url(${slide.img})` }}
             ></div>
-            <div className="absolute inset-0 bg-black/5 md:bg-transparent"></div>
+            <div className="absolute inset-0 bg-black/5"></div>
           </SwiperSlide>
         ))}
       </Swiper>
