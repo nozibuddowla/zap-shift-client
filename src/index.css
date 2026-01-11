@@ -5,7 +5,9 @@
   /* Define colors here so Tailwind 4 core picks them up */
   --color-light-gray: #dadada;
   --color-blue-9: #03464d;
-  --color-dark-gray: #1F1F1F;
+  --color-dark-gray: #1f1f1f;
+  --color-pale: #f9f9fa;
+  --color-granite-gray: #606060;
 }
 
 @plugin "daisyui" {
