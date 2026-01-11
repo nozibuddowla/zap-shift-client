@@ -1,8 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
+@theme {
+  /* Define colors here so Tailwind 4 core picks them up */
+  --color-light-gray: #dadada;
+  --color-blue-9: #03464d;
+}
+
 @plugin "daisyui" {
   themes: light --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  /* DaisyUI will now pull from the theme variables above */
+  --color-primary: #caeb66;
+  --color-secondary: #0b0b0b;
+  --color-accent: #03373d;
 }
 
 body {
