@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import bookingIcon from "../../../assets/bookingIcon.png";
 
 const HowItWorks = () => {
@@ -24,28 +25,47 @@ const HowItWorks = () => {
   return (
     <div className="px-4 py-16 overflow-hidden space-y-8">
       {/* Header Section */}
-      <div className="mb-12">
+      <motion.div
+        initial={{ x: -50, opacity: 0 }}
+        whileInView={{ x: 0, opacity: 1 }}
+        viewport={{ once: true }}
+        className="mb-12"
+      >
         <span className="text-primary font-bold tracking-widest uppercase text-sm">
           Our Process
         </span>
         <h2 className="text-secondary font-extrabold text-3xl md:text-4xl lg:text-5xl mt-2">
           How it Works
         </h2>
-        <div className="w-20 h-1.5 bg-primary mt-4 rounded-full"></div>
-      </div>
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: 80 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="w-20 h-1.5 bg-primary mt-4 rounded-full"
+        ></motion.div>
+      </motion.div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {howItWorksItems.map((item, index) => (
-          <div
+          <motion.div
             key={index}
-            className="group relative p-8 rounded-[2.5rem] bg-pale border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.15 }}
+            className="group relative p-8 rounded-[2.5rem] bg-pale border border-gray-100 shadow-sm overflow-hidden"
           >
             {/* Step Number Badge */}
-            <div className="absolute top-6 right-8 text-5xl font-black text-gray-500 group-hover:text-primary/10 transition-colors">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 0.1, x: 0 }}
+              className="absolute top-6 right-8 text-6xl font-black text-gray-800 pointer-events-none"
+            >
               0{index + 1}
-            </div>
+            </motion.div>
 
             {/* Icon Container */}
-            <div className="w-14 h-14 mb-6 rounded-2xl bg-secondary/5 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+            <div className="w-14 h-14 mb-6 rounded-2xl bg-secondary/5 flex items-center justify-center group-hover:bg-primary transition-colors duration-500">
               <img
                 src={bookingIcon}
                 alt={item.title}
@@ -57,13 +77,15 @@ const HowItWorks = () => {
             <h3 className="text-accent font-bold text-xl leading-6 mb-4">
               {item.title}
             </h3>
-            <p className="text-granite-gray text-sm leading-relaxed">
-              {item.desc}
-            </p>
+            <p className="text-granite-gray leading-relaxed">{item.desc}</p>
 
             {/* Bottom Accent Bar */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-primary group-hover:w-1/2 transition-all duration-300 rounded-t-full"></div>
-          </div>
+            <motion.div
+              className="absolute bottom-0 left-0 h-1 bg-primary"
+              initial={{ width: 0 }}
+              whileHover={{ width: "100%" }}
+            ></motion.div>
+          </motion.div>
         ))}
       </div>
     </div>
