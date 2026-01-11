@@ -111,9 +111,7 @@ const Navbar = () => {
             to="/be-a-rider"
             className="btn btn-primary btn-sm sm:btn-md text-dark-gray rounded-full px-3 sm:px-6 flex items-center gap-2 shadow-md border-none"
           >
-            <span className="hidden xs:block">Be a rider</span>
-            <span className="xs:hidden">Join</span>{" "}
-            {/* Shorter text for tiny phones */}
+            <span >Be a rider</span>
             <div className="bg-secondary rounded-full p-1 group">
               <FiArrowUpRight className="text-primary" size={12} />
             </div>
