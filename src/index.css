@@ -5,6 +5,7 @@
   /* Define colors here so Tailwind 4 core picks them up */
   --color-light-gray: #dadada;
   --color-blue-9: #03464d;
+  --color-dark-gray: #1F1F1F;
 }
 
 @plugin "daisyui" {
@@ -24,4 +25,28 @@ body {
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+/* Container for bullets */
+.swiper-pagination {
+  bottom: 30px !important;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Base style for the dash (inactive) */
+.swiper-pagination-bullet.custom-bullet {
+  width: 20px !important;
+  height: 4px !important;
+  background-color: var(--color-light-gray) !important; /* Light Gray */
+  border-radius: 99px !important;
+  opacity: 1 !important;
+  transition: all 0.4s ease;
+}
+
+/* Active state (The Primary Green Dash) */
+.swiper-pagination-bullet-active.custom-bullet {
+  background-color: var(--color-accent) !important;
+  width: 40px !important; /* Makes the active one longer */
 }
