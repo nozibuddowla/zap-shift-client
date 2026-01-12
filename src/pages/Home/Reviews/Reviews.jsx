@@ -14,10 +14,10 @@ import ReviewCard from "./ReviewCard";
 
 const Reviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);
-//   console.log(reviews);
+  //   console.log(reviews);
 
   return (
-    <div className="px-4 space-y-10">
+    <div className="my-24 px-4 space-y-10">
       <div className="flex flex-col justify-center items-center max-w-4xl mx-auto text-center space-y-10">
         <img src={customerTop} alt="" className="w-40 md:w-52 lg:w-60" />
         <div className="space-y-6">
@@ -37,17 +37,17 @@ const Reviews = ({ reviewsPromise }) => {
         grabCursor={true}
         centeredSlides={true}
         loop={true}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        autoplay={{ delay: 2000, disableOnInteraction: false }}
         breakpoints={{
           320: { slidesPerView: 1.2, spaceBetween: 20 },
           768: { slidesPerView: 2, spaceBetween: 30 },
           1024: { slidesPerView: 3, spaceBetween: 40 },
         }}
         coverflowEffect={{
-          rotate: 0,
+          rotate: 10,
           stretch: 0,
           depth: 100,
-          modifier: 2.5,
+          modifier: 1,
           slideShadows: true,
         }}
         pagination={{ clickable: true }}
