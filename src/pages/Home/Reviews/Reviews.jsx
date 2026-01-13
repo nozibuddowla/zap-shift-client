@@ -17,7 +17,7 @@ const Reviews = ({ reviewsPromise }) => {
   //   console.log(reviews);
 
   return (
-    <div className="my-24 px-4 space-y-10">
+    <div className="my-12 px-4 space-y-10">
       <div className="flex flex-col justify-center items-center max-w-4xl mx-auto text-center space-y-10">
         <img src={customerTop} alt="" className="w-40 md:w-52 lg:w-60" />
         <div className="space-y-6">
