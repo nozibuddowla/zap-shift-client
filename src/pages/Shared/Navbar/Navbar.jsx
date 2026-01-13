@@ -40,13 +40,13 @@ const Navbar = () => {
   const links = (
     <>
       {linkItems.map((item) => (
-        <li key={item}>
+        <li key={item} className="mb-5 lg:mb-0">
           <NavLink
             to={`/${item.toLowerCase().replace(/\s+/g, "")}`}
             onClick={closeDropdown}
             className={({ isActive }) =>
               isActive
-                ? "text-primary font-bold bg-transparent!"
+                ? "text-accent bg-primary rounded-full p-2 font-bold"
                 : "hover:text-accent bg-transparent!"
             }
           >

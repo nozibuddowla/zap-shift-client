@@ -8,6 +8,7 @@
   --color-dark-gray: #1f1f1f;
   --color-pale: #f9f9fa;
   --color-granite-gray: #606060;
+  --color-green-10: #5B6A2E;
 }
 
 @plugin "daisyui" {
