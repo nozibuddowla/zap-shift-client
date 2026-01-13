@@ -15,6 +15,7 @@ export const router = createBrowserRouter([
       {
         path: "/coverage",
         Component: Coverage,
+        HydrateFallback: () => <div className="p-10 flex items-center justify-center text-center">Loading Map...</div>,
         loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
     ],
