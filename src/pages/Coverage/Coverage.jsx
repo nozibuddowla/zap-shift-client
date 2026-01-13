@@ -71,7 +71,7 @@ const Coverage = () => {
               name="location"
               type="text"
               placeholder="Enter district name..."
-              className="input input-bordered w-full bg-transparent pl-5 pr-2 py-2 md:py-3 outline-none text-accent text-sm md:text-base"
+              className="input border-none w-full bg-transparent pl-5 pr-2 py-2 md:py-3 outline-none text-accent text-sm md:text-base"
             />
             <button className="btn btn-primary text-granite-gray rounded-full px-5 md:px-8 shadow-md border-none btn-sm md:btn-md">
               Search

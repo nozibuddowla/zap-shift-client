@@ -44,7 +44,7 @@ const Reviews = ({ reviewsPromise }) => {
           1024: { slidesPerView: 3, spaceBetween: 40 },
         }}
         coverflowEffect={{
-          rotate: 10,
+          rotate: 5,
           stretch: 0,
           depth: 100,
           modifier: 1,
