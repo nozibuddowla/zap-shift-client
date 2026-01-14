@@ -9,6 +9,8 @@
   --color-pale: #f9f9fa;
   --color-granite-gray: #606060;
   --color-green-10: #5B6A2E;
+  --color-green-10: #5B6A2E;
+  --color-cloud-white: #e6f2f3
 }
 
 @plugin "daisyui" {

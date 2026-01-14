@@ -6,6 +6,7 @@ import Brands from "../Brands/Brands";
 import Reviews from "../Reviews/Reviews";
 import TrustProcess from "../TrustProcess/TrustProcess";
 import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
+import FAQ from "../FAQ/FAQ";
 
 const reviewsPromise = fetch("/reviews.json").then((res) => res.json());
 
@@ -17,6 +18,7 @@ const Home = () => {
       <OurServices />
       <Brands />
       <TrustProcess />
+      <WhyChooseUs />
       <Suspense
         fallback={
           <div className="py-20 flex justify-center items-center text-center font-bold">
@@ -26,7 +28,8 @@ const Home = () => {
       >
         <Reviews reviewsPromise={reviewsPromise} />
       </Suspense>
-      <WhyChooseUs />
+
+      <FAQ />
     </div>
   );
 };
