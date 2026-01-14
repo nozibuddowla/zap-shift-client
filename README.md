@@ -1,16 +1,50 @@
-# React + Vite
+# 📦 ZapShift Courier - Client Side
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**ZapShift** is a modern, high-performance logistics and parcel delivery web application. Built for speed and reliability, it provides merchants and customers with a seamless experience for tracking, service location, and partnership onboarding.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [https://zapshift-nozib.netlify.app/](https://zapshift-nozib.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+* **Framework:** [React 19](https://react.dev/)
+* **Routing:** [React Router 7](https://reactrouter.com/) (using `createBrowserRouter`)
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/) & [DaisyUI](https://daisyui.com/)
+* **Animations:** [Framer Motion](https://www.framer.com/motion/)
+* **Components:** [Swiper.js](https://swiperjs.com/) (Carousel), React Icons
+* **Deployment:** [Netlify](https://www.netlify.com/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Installation & Setup
+
+1. **Clone the repository:**
+```bash
+git clone https://github.com/nozibuddowla/zap-shift-client.git
+
+```
+
+
+2. **Install dependencies:**
+```bash
+npm install
+
+```
+
+
+3. **Run the development server:**
+```bash
+npm run dev
+
+```
+
+
+4. **Build for production:**
+```bash
+npm run build
+
+```
+
+---
