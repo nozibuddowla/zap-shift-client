@@ -16,7 +16,9 @@ const Register = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-3xl font-black text-accent">Create an Account</h1>
+        <h1 className="text-3xl lg:text-[42px] font-black text-accent">
+          Create an Account
+        </h1>
         <p className="text-granite-gray">Register with ZapShift</p>
       </div>
 
@@ -71,6 +73,12 @@ const Register = () => {
             className="input input-bordered w-full rounded-xl focus:outline-primary"
             {...register("email", { required: "Email is required" })}
           />
+
+          {errors.email && (
+            <p className="text-red-500">
+              {errors.email.message}
+            </p>
+          )}
         </div>
 
         {/* Password Field */}
@@ -83,8 +91,15 @@ const Register = () => {
             {...register("password", {
               required: "Password is required",
               minLength: { value: 6, message: "Too short!" },
+              pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
             })}
           />
+          {errors.password?.type === "pattern" && (
+            <p className="text-red-500">
+              Must have at least one uppercase, at least one lowercase, at least
+              one number, at least one special characters.{" "}
+            </p>
+          )}
         </div>
 
         <div>
