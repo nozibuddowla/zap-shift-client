@@ -20,9 +20,9 @@ const ReviewCard = ({ reviewInfo }) => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col h-full relative group hover:shadow-xl hover:border-primary/60 transition-all duration-500">
+    <div className="bg-pale p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.04)] flex flex-col h-full relative group hover:shadow-xl hover:border-primary/60 transition-all duration-500">
       {/* Quote Icon */}
-      <div className="absolute top-8 right-8 text-primary/5 group-hover:text-primary/10 transition-colors">
+      <div className="absolute top-5 right-8 text-primary/5 group-hover:text-primary/10 transition-colors">
         <img src={reviewQuote} alt="" />
       </div>
 
@@ -35,7 +35,7 @@ const ReviewCard = ({ reviewInfo }) => {
       </div>
 
       {/* Feedback Text */}
-      <p className="text-granite-gray text-base leading-relaxed mb-8 flex-1 italic">
+      <p className="text-granite-gray font-medium text-base leading-relaxed mb-8 flex-1 italic">
         "{review}"
       </p>
 
@@ -53,6 +53,7 @@ const ReviewCard = ({ reviewInfo }) => {
             {/* Online status dot often seen in Figma */}
             <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
           </div>
+          
           <div>
             <h4 className="font-bold text-accent text-lg leading-tight group-hover:text-primary transition-colors">
               {userName}

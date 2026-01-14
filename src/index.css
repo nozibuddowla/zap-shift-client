@@ -10,7 +10,8 @@
   --color-granite-gray: #606060;
   --color-green-10: #5B6A2E;
   --color-green-10: #5B6A2E;
-  --color-cloud-white: #e6f2f3
+  --color-cloud-white: #e6f2f3;
+  --color-light-blue: #94c6cb;
 }
 
 @plugin "daisyui" {
@@ -54,4 +55,18 @@ body {
 .swiper-pagination-bullet-active.custom-bullet {
   background-color: var(--color-accent) !important;
   width: 40px !important; /* Makes the active one longer */
+}
+
+
+.custom-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: var(--color-light-blue);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  background: var(--color-accent) !important; /* Your Primary Color */
+  border-radius: 6px;
 }
