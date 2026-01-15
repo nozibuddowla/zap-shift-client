@@ -36,7 +36,7 @@ const FAQ = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-black text-accent"
+          className="text-3xl md:text-4xl lg:text-5xl font-black text-accent"
         >
           Frequently Asked <span className="text-primary">Questions</span>
         </motion.h2>

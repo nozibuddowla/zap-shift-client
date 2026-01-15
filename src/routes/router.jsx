@@ -7,17 +7,14 @@ import Error404 from "../components/Error404/Error404";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
+import LoadingPage from "../components/LoadingPage/LoadingPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
     errorElement: <Error404 />,
-    hydrateFallback: () => (
-      <div className="p-10 flex items-center justify-center text-center">
-        Loading...
-      </div>
-    ),
+    hydrateFallback: <LoadingPage />,
     children: [
       {
         index: true,

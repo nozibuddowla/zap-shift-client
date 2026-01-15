@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import Logo from "../../../components/Logo/Logo";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { FiArrowUpRight } from "react-icons/fi";
 import { HiOutlineMenuAlt4, HiX } from "react-icons/hi";
+import useAuth from "../../../hooks/useAuth";
+import { button } from "motion/react-client";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { user, logOut } = useAuth();
+  const navigate = useNavigate();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -57,6 +61,17 @@ const Navbar = () => {
     </>
   );
 
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        navigate("/")
+      })
+      .catch(err => {
+      console.log(err);
+      
+    })
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full py-4">
       <div className="navbar bg-white/90 backdrop-blur-md rounded-2xl md:rounded-full shadow-sm border border-gray-100 px-2 sm:px-4 md:px-8 max-w-7xl mx-auto">
@@ -100,22 +115,33 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className="navbar-end gap-1 sm:gap-3">
-          <NavLink
-            to="/signin"
-            className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 hidden sm:flex border-none"
-          >
-            Sign In
-          </NavLink>
-          <NavLink
-            to="/be-a-rider"
-            className="btn btn-primary btn-sm sm:btn-md text-dark-gray rounded-full px-3 sm:px-6 flex items-center gap-2 shadow-md border-none"
-          >
-            <span >Be a rider</span>
-            <div className="bg-secondary rounded-full p-1 group">
-              <FiArrowUpRight className="text-primary" size={12} />
+        <div className="navbar-end">
+          {user ? (
+            <button
+              onClick={handleLogOut}
+              className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 hidden sm:flex border-none"
+            >
+              Logout
+            </button>
+          ) : (
+            <div className="flex items-center gap-1 sm:gap-3">
+              <NavLink
+                to="/signin"
+                className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 hidden sm:flex border-none"
+              >
+                Sign In
+              </NavLink>
+              <NavLink
+                to="/be-a-rider"
+                className="btn btn-primary btn-sm sm:btn-md text-dark-gray rounded-full px-3 sm:px-6 flex items-center gap-2 shadow-md border-none"
+              >
+                <span>Be a rider</span>
+                <div className="bg-secondary rounded-full p-1 group">
+                  <FiArrowUpRight className="text-primary" size={12} />
+                </div>
+              </NavLink>
             </div>
-          </NavLink>
+          )}
         </div>
       </div>
     </header>

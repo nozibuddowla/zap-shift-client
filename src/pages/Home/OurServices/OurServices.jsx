@@ -57,7 +57,7 @@ const OurServices = () => {
       <div className="mb-16 space-y-4 text-center max-w-3xl mx-auto">
         <motion.h2
           variants={cardVariants}
-          className="text-white font-extrabold text-3xl md:text-[40px] leading-12"
+          className="text-white font-extrabold text-3xl md:text-4xl lg:text-5xl"
         >
           Our Services
         </motion.h2>

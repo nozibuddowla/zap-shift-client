@@ -24,7 +24,7 @@ const Brands = () => {
   return (
     <div className="py-16 space-y-10 overflow-hidden">
       <div className="max-w-3xl mx-auto px-4">
-        <h2 className="text-accent font-extrabold text-2xl lg:text-4xl text-center leading-tight">
+        <h2 className="text-accent font-extrabold text-3xl md:text-4xl lg:text-5xl">
           We've helped thousands of sales teams
         </h2>
       </div>

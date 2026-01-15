@@ -28,7 +28,7 @@ const Reviews = ({ reviewsPromise }) => {
       <div className="flex flex-col justify-center items-center max-w-4xl mx-auto text-center space-y-10">
         <img src={customerTop} alt="" className="w-40 md:w-52 lg:w-60" />
         <div className="space-y-6">
-          <h3 className="font-extrabold text-2xl md:text-3xl lg:text-[40px] text-accent">
+          <h3 className="font-extrabold text-3xl md:text-4xl lg:text-5xl text-accent">
             {" "}
             What our customers are sayings
           </h3>
