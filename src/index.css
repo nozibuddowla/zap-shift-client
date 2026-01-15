@@ -13,6 +13,8 @@
   --color-cloud-white: #e6f2f3;
   --color-light-blue: #94c6cb;
   --color-eerie-black: #1a1a1a;
+  --color-blue-1: #E9ECF1;
+  --color-sonic-silver: #71717a;
 }
 
 @plugin "daisyui" {

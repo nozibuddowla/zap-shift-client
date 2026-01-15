@@ -2,7 +2,10 @@ import { p } from "motion/react-client";
 import React from "react";
 import { useForm } from "react-hook-form";
 import imageUpload from "../../../assets/image-upload-icon.png";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useAuth from "../../../hooks/useAuth";
+import { FcGoogle } from "react-icons/fc";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const {
@@ -11,7 +14,34 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const handleRegistration = (data) => console.log(data);
+  const { registerUser, signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
+
+  const handleRegistration = (data) => {
+    // console.log(data);
+    registerUser(data.email, data.password)
+      .then((result) => {
+        // console.log(result.user);
+        toast.success("Account created successfully", {
+          position: "top-center",
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Error: ", err.message, {
+          position: "top-center",
+        });
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="space-y-6">
@@ -75,9 +105,7 @@ const Register = () => {
           />
 
           {errors.email && (
-            <p className="text-red-500">
-              {errors.email.message}
-            </p>
+            <p className="text-red-500">{errors.email.message}</p>
           )}
         </div>
 
@@ -113,12 +141,24 @@ const Register = () => {
           Register
         </button>
 
-        <p className="text-center text-sm text-granite-gray mt-4">
-          Already have an account?{" "}
+        <p className="flex items-center gap-2.5 text-granite-gray mt-4">
+          <span>Already have an account?</span>{" "}
           <Link to="/signin" className="text-accent font-bold hover:underline">
             Login
           </Link>
         </p>
+        <div className="relative flex py-3 items-center">
+          <div className="grow border-t border-gray-300"></div>
+          <span className="shrink mx-4 text-sonic-silver">Or</span>
+          <div className="grow border-t border-gray-300"></div>
+        </div>
+        <button
+          onClick={handleGoogleLogin}
+          type="button"
+          className="btn btn-blue-1 w-full text-dark-gray font-bold text-lg rounded-xl h-14 shadow-lg mt-4 gap-2.5 flex items-center"
+        >
+          <FcGoogle size="20" /> <span>Register with google</span>
+        </button>
       </form>
     </div>
   );
