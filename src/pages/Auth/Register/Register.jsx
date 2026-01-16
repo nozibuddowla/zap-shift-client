@@ -2,7 +2,7 @@ import { p } from "motion/react-client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import imageUpload from "../../../assets/image-upload-icon.png";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
@@ -19,6 +19,9 @@ const Register = () => {
   const navigate = useNavigate();
   const [preview, setPreview] = useState(imageUpload);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const location = useLocation();
+
+  console.log("in register", location);
 
   const IMGBB_API_KEY = import.meta.env.VITE_IMAGEBB_API_KEY;
   const hosting_url = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
@@ -45,7 +48,7 @@ const Register = () => {
         await updateUserProfile(data.name, photoURL);
 
         toast.success("Account created successfully!");
-        navigate("/");
+        navigate(location.state || "/");
       } else {
         throw new Error("Image upload failed");
       }
@@ -163,10 +166,6 @@ const Register = () => {
           )}
         </div>
 
-        <div>
-          <a className="link link-hover">Forgot password?</a>
-        </div>
-
         <button
           type="submit"
           disabled={isSubmitting}
@@ -181,7 +180,11 @@ const Register = () => {
 
         <p className="flex items-center gap-2.5 text-granite-gray mt-4">
           <span>Already have an account?</span>{" "}
-          <Link to="/signin" className="text-accent font-bold hover:underline">
+          <Link
+            state={location.state}
+            to="/signin"
+            className="text-accent font-bold hover:underline"
+          >
             Login
           </Link>
         </p>

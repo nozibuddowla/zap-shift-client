@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
 
@@ -9,10 +9,13 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm();
-  const { signInUser, signInWithGoogle } = useAuth();
+  const { signInUser, signInWithGoogle, resetPassword } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  // console.log("in the login page", location);
 
   const handleLogin = (data) => {
     // console.log(data);
@@ -22,7 +25,7 @@ const Login = () => {
         toast.success("Welcome back!", {
           position: "top-center",
         });
-        navigate("/");
+        navigate(location.state || "/");
       })
       .catch((err) => {
         console.log(err);
@@ -33,10 +36,15 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    signInWithGoogle()
-      .then(() => {
-        navigate("/");
-      })
+    signInWithGoogle().then(() => {
+      navigate(location.state || "/");
+    });
+  };
+
+  const handleForgotPassword = () => {
+    const email = getValues("email");
+
+    navigate("/forgot-password", {state: {email}});
   };
 
   return (
@@ -81,7 +89,7 @@ const Login = () => {
         </div>
 
         <div>
-          <a className="link link-hover">Forgot password?</a>
+          <button type="button" onClick={handleForgotPassword} className="link link-hover text-accent font-semibold">Forgot password?</button>
         </div>
 
         <button
@@ -94,6 +102,7 @@ const Login = () => {
         <p className="text-granite-gray mt-4 flex items-center gap-2.5">
           <span>Don’t have any account?</span>
           <Link
+            state={location.state}
             to="/register"
             className="text-accent font-bold hover:underline"
           >

@@ -112,6 +112,16 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-2 font-medium text-gray-600">
             {links}
+
+            <NavLink
+              to="/be-a-rider"
+              className="btn btn-primary btn-sm sm:btn-md text-dark-gray rounded-full px-3 sm:px-6 flex items-center gap-2 shadow-md border-none"
+            >
+              <span>Be a rider</span>
+              <div className="bg-secondary rounded-full p-1 group">
+                <FiArrowUpRight className="text-primary" size={12} />
+              </div>
+            </NavLink>
           </ul>
         </div>
 
@@ -130,15 +140,6 @@ const Navbar = () => {
                 className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 hidden sm:flex border-none"
               >
                 Sign In
-              </NavLink>
-              <NavLink
-                to="/be-a-rider"
-                className="btn btn-primary btn-sm sm:btn-md text-dark-gray rounded-full px-3 sm:px-6 flex items-center gap-2 shadow-md border-none"
-              >
-                <span>Be a rider</span>
-                <div className="bg-secondary rounded-full p-1 group">
-                  <FiArrowUpRight className="text-primary" size={12} />
-                </div>
               </NavLink>
             </div>
           )}

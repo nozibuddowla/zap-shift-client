@@ -8,6 +8,10 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import LoadingPage from "../components/LoadingPage/LoadingPage";
+import Rider from "../pages/Rider/Rider";
+import PrivateRoute from "./PrivateRoute";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -21,8 +25,17 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
+        path: "/be-a-rider",
+        element: (
+          <PrivateRoute>
+            <Rider />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/coverage",
         Component: Coverage,
+        HydrateFallback: LoadingPage,
         loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
       {
@@ -43,6 +56,14 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/forgot-password",
+        Component: ForgotPassword,
+      },
+      {
+        path: "/reset-password",
+        Component: ResetPassword,
       },
     ],
   },
