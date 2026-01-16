@@ -1,11 +1,12 @@
 import { p } from "motion/react-client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import imageUpload from "../../../assets/image-upload-icon.png";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Register = () => {
   const {
@@ -14,25 +15,46 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { registerUser, signInWithGoogle } = useAuth();
+  const { registerUser, signInWithGoogle, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const [preview, setPreview] = useState(imageUpload);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleRegistration = (data) => {
-    console.log(data.photo[0]);
-    registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
-        toast.success("Account created successfully", {
-          position: "top-center",
-        });
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Error: ", err.message, {
-          position: "top-center",
-        });
+  const IMGBB_API_KEY = import.meta.env.VITE_IMAGEBB_API_KEY;
+  const hosting_url = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
+
+  const handleRegistration = async (data) => {
+    setIsSubmitting(true);
+    try {
+      // console.log("after register", data.photo[0]);
+      const imageFile = data.photo[0];
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const res = await axios.post(hosting_url, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
       });
+
+      if (res.data.success) {
+        const photoURL = res.data.data.display_url;
+
+        const result = await registerUser(data.email, data.password);
+
+        await updateUserProfile(data.name, photoURL);
+
+        toast.success("Account created successfully!");
+        navigate("/");
+      } else {
+        throw new Error("Image upload failed");
+      }
+    } catch (err) {
+      console.error("Error during registration:", err);
+      toast.error(err.response?.data?.error?.message || err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -61,9 +83,9 @@ const Register = () => {
           >
             <div className="w-20 h-20 rounded-full bg-pale flex items-center justify-center border-2 border-dashed border-gray-300 group-hover:border-primary transition-colors overflow-hidden">
               <img
-                src={imageUpload}
+                src={preview}
                 alt="Upload"
-                className="w-10 h-10 object-contain"
+                className="w-full h-full object-contain"
               />
             </div>
             <input
@@ -71,7 +93,13 @@ const Register = () => {
               id="image_input"
               accept="image/*"
               className="hidden"
-              {...register("photo", { required: "Photo is required" })}
+              {...register("photo", {
+                required: "Photo is required",
+                onChange: (e) => {
+                  const file = e.target.files[0];
+                  if (file) setPreview(URL.createObjectURL(file));
+                },
+              })}
             />
             {errors.photo?.type === "required" && (
               <span className="text-red-500 text-sm mt-1">
@@ -141,9 +169,14 @@ const Register = () => {
 
         <button
           type="submit"
+          disabled={isSubmitting}
           className="btn btn-primary w-full text-dark-gray font-bold text-lg rounded-xl h-14 shadow-lg mt-4"
         >
-          Register
+          {isSubmitting ? (
+            <span className="loading loading-spinner"></span>
+          ) : (
+            "Register"
+          )}
         </button>
 
         <p className="flex items-center gap-2.5 text-granite-gray mt-4">
