@@ -18,10 +18,10 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegistration = (data) => {
-    // console.log(data);
+    console.log(data.photo[0]);
     registerUser(data.email, data.password)
       .then((result) => {
-        // console.log(result.user);
+        console.log(result.user);
         toast.success("Account created successfully", {
           position: "top-center",
         });
@@ -71,8 +71,13 @@ const Register = () => {
               id="image_input"
               accept="image/*"
               className="hidden"
-              {...register("photo")}
+              {...register("photo", { required: "Photo is required" })}
             />
+            {errors.photo?.type === "required" && (
+              <span className="text-red-500 text-sm mt-1">
+                {errors.photo.message}
+              </span>
+            )}
           </label>
         </div>
 
@@ -87,7 +92,7 @@ const Register = () => {
             }`}
             {...register("name", { required: "Name is required" })}
           />
-          {errors.name && (
+          {errors.name?.type === "required" && (
             <span className="text-red-500 text-sm mt-1">
               {errors.name.message}
             </span>
@@ -104,7 +109,7 @@ const Register = () => {
             {...register("email", { required: "Email is required" })}
           />
 
-          {errors.email && (
+          {errors.email?.type === "required" && (
             <p className="text-red-500">{errors.email.message}</p>
           )}
         </div>
