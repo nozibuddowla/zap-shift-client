@@ -36,6 +36,7 @@ const Navbar = () => {
     "Services",
     "Coverage",
     "About Us",
+    "Send Parcel",
     "Pricing",
     "Blog",
     "Contact",
