@@ -45,6 +45,9 @@ export const router = createBrowserRouter([
       },
       {
         path: "/sendparcel",
+        HydrateFallback: LoadingPage,
+
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
         element: (
           <PrivateRoute>
             <SendParcel />
