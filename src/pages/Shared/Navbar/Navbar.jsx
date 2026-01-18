@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from "react-router";
 import { FiArrowUpRight } from "react-icons/fi";
 import { HiOutlineMenuAlt4, HiX } from "react-icons/hi";
 import useAuth from "../../../hooks/useAuth";
-import { button } from "motion/react-client";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,21 +32,29 @@ const Navbar = () => {
   };
 
   const linkItems = [
-    "Services",
-    "Coverage",
-    "About Us",
-    "Send Parcel",
-    "Pricing",
-    "Blog",
-    "Contact",
+    { name: "Services", path: "/services", private: false },
+    { name: "Coverage", path: "/coverage", private: false },
+    { name: "About Us", path: "/about-us", private: false },
+    { name: "Pricing", path: "/pricing", private: false },
+    { name: "Blog", path: "/blog", private: false },
+    { name: "Contact", path: "/contact", private: false },
+    // Private Routes
+    { name: "Send Parcel", path: "/send-parcel", private: true },
+    { name: "My Parcels", path: "/dashboard/my-parcels", private: true },
+    { name: "Be a Rider", path: "/be-a-rider", private: true },
   ];
+
+  const visibleLinks = linkItems.filter((item) => {
+    if (item.private) return !!user; 
+    return true;
+  });
 
   const links = (
     <>
-      {linkItems.map((item) => (
-        <li key={item} className="mb-5 lg:mb-0">
+      {visibleLinks.map((item) => (
+        <li key={item.name} className="mb-5 lg:mb-0">
           <NavLink
-            to={`/${item.toLowerCase().replace(/\s+/g, "")}`}
+            to={item.path}
             onClick={closeDropdown}
             className={({ isActive }) =>
               isActive
@@ -55,7 +62,7 @@ const Navbar = () => {
                 : "hover:text-accent bg-transparent!"
             }
           >
-            {item}
+            {item.name}
           </NavLink>
         </li>
       ))}
@@ -65,20 +72,19 @@ const Navbar = () => {
   const handleLogOut = () => {
     logOut()
       .then(() => {
-        navigate("/")
+        navigate("/");
       })
-      .catch(err => {
-      console.log(err);
-      
-    })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full py-4">
       <div className="navbar bg-white/90 backdrop-blur-md rounded-2xl md:rounded-full shadow-sm border border-gray-100 px-2 sm:px-4 md:px-8 max-w-7xl mx-auto">
         {/* START: Menu & Logo */}
         <div className="navbar-start flex items-center gap-1">
-          <div className="lg:hidden" ref={dropdownRef}>
+          <div className="xl:hidden" ref={dropdownRef}>
             <button
               className="btn btn-ghost btn-circle btn-sm sm:btn-md"
               onClick={toggleMenu}
@@ -110,19 +116,9 @@ const Navbar = () => {
         </div>
 
         {/* CENTER: Desktop Menu */}
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-2 font-medium text-gray-600">
+        <div className="navbar-center hidden xl:flex">
+          <ul className="menu menu-horizontal gap-2 font-medium text-gray-600">
             {links}
-
-            <NavLink
-              to="/be-a-rider"
-              className="btn btn-primary btn-sm sm:btn-md text-dark-gray rounded-full px-3 sm:px-6 flex items-center gap-2 shadow-md border-none"
-            >
-              <span>Be a rider</span>
-              <div className="bg-secondary rounded-full p-1 group">
-                <FiArrowUpRight className="text-primary" size={12} />
-              </div>
-            </NavLink>
           </ul>
         </div>
 

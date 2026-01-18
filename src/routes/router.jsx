@@ -13,6 +13,8 @@ import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import SendParcel from "../pages/SendParcel/SendParcel";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 
 export const router = createBrowserRouter([
   {
@@ -40,11 +42,11 @@ export const router = createBrowserRouter([
         loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
       {
-        path: "/aboutus",
+        path: "/about-us",
         Component: AboutUS,
       },
       {
-        path: "/sendparcel",
+        path: "/send-parcel",
         HydrateFallback: LoadingPage,
 
         loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
@@ -76,6 +78,21 @@ export const router = createBrowserRouter([
       {
         path: "/reset-password",
         Component: ResetPassword,
+      },
+    ],
+  },
+
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "my-parcels",
+        Component: MyParcels,
       },
     ],
   },
