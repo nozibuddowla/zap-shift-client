@@ -2,6 +2,9 @@ import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 
 const SendParcel = () => {
   const {
@@ -18,6 +21,8 @@ const SendParcel = () => {
     },
   });
 
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const serviceCenter = useLoaderData();
   const regionsDuplicate = serviceCenter.map((c) => c.region);
   const regions = [...new Set(regionsDuplicate)];
@@ -49,7 +54,7 @@ const SendParcel = () => {
         const extraWeight = weight - 3;
         const extraCharge = isSameDistrict
           ? extraWeight * 40
-          : (extraWeight * 40) + 40;
+          : extraWeight * 40 + 40;
 
         cost = minCharge + extraCharge;
       }
@@ -66,6 +71,11 @@ const SendParcel = () => {
       confirmButtonText: "Yes!",
     }).then((result) => {
       if (result.isConfirmed) {
+        // save the parcel info to the database
+        axiosSecure.post("/parcels", data).then((res) => {
+          toast.success("Your parcel info received");
+          console.log("after saving parcel", res.data);
+        });
         // Swal.fire({
         //   title: "Deleted!",
         //   text: "Your file has been deleted.",
@@ -165,6 +175,8 @@ const SendParcel = () => {
                 <input
                   type="text"
                   {...register("senderName")}
+                  defaultValue={user?.displayName}
+                  readOnly
                   className="input input-bordered rounded-xl bg-gray-50/30"
                   placeholder="Sender Name"
                 />
@@ -177,6 +189,8 @@ const SendParcel = () => {
                 <input
                   type="email"
                   {...register("senderEmail")}
+                  defaultValue={user?.email}
+                  readOnly
                   className="input input-bordered rounded-xl bg-gray-50/30"
                   placeholder="Sender Email"
                 />
