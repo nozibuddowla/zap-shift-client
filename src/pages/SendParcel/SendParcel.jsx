@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 
 const SendParcel = () => {
   const {
@@ -32,8 +33,46 @@ const SendParcel = () => {
 
   const handleParcel = (data) => {
     // console.log(data);
-    const sameDistrict = data.senderDistrict === data.receiverDistrict;
+    const isDocument = data.parcelType === "document";
+    const isSameDistrict = data.senderDistrict === data.receiverDistrict;
     // console.log(sameDistrict);
+    const weight = parseFloat(data.parcelWeight);
+
+    let cost = 0;
+    if (isDocument) {
+      cost = isSameDistrict ? 60 : 80;
+    } else {
+      if (weight <= 3) {
+        cost = isSameDistrict ? 110 : 150;
+      } else {
+        const minCharge = isSameDistrict ? 110 : 150;
+        const extraWeight = weight - 3;
+        const extraCharge = isSameDistrict
+          ? extraWeight * 40
+          : (extraWeight * 40) + 40;
+
+        cost = minCharge + extraCharge;
+      }
+    }
+
+    // console.log("cost", cost);
+    Swal.fire({
+      title: "Are you okay with the Cost?",
+      text: `You will be charged ${cost} taka!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success",
+        // });
+      }
+    });
   };
 
   return (
@@ -290,7 +329,9 @@ const SendParcel = () => {
                   defaultValue=""
                   className="select"
                 >
-                  <option value="" disabled>Select your Region</option>
+                  <option value="" disabled>
+                    Select your Region
+                  </option>
                   {regions.map((item, index) => (
                     <option key={index} value={item}>
                       {item}
@@ -309,7 +350,9 @@ const SendParcel = () => {
                     defaultValue="Select your District"
                     className="select"
                   >
-                    <option value="" disabled>Select your District</option>
+                    <option value="" disabled>
+                      Select your District
+                    </option>
                     {districtsByRegion(receiverRegion).map((item, index) => (
                       <option key={index} value={item}>
                         {item}
