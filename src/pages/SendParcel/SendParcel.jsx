@@ -60,6 +60,12 @@ const SendParcel = () => {
       }
     }
 
+    const finalParcelData = {
+      ...data,
+      cost: cost,
+      createdAt: new Date(),
+    };
+
     // console.log("cost", cost);
     Swal.fire({
       title: "Are you okay with the Cost?",
@@ -72,15 +78,9 @@ const SendParcel = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // save the parcel info to the database
-        axiosSecure.post("/parcels", data).then((res) => {
+        axiosSecure.post("/parcels", finalParcelData).then((res) => {
           toast.success("Your parcel info received");
-          console.log("after saving parcel", res.data);
         });
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
       }
     });
   };

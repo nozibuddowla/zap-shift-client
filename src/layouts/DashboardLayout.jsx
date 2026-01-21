@@ -6,7 +6,7 @@ import { MdDeliveryDining } from "react-icons/md";
 
 const DashboardLayout = () => {
   return (
-    <div className="drawer lg:drawer-open max-w-[1600px] mx-auto">
+    <div className="drawer lg:drawer-open max-w-400 mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Navbar */}
