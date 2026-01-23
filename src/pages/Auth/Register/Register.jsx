@@ -7,6 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const {
@@ -19,9 +20,10 @@ const Register = () => {
   const navigate = useNavigate();
   const [preview, setPreview] = useState(imageUpload);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [show, setShow] = useState(false);
   const location = useLocation();
 
-  console.log("in register", location);
+  // console.log("in register", location);
 
   const IMGBB_API_KEY = import.meta.env.VITE_IMAGEBB_API_KEY;
   const hosting_url = `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`;
@@ -146,10 +148,10 @@ const Register = () => {
         </div>
 
         {/* Password Field */}
-        <div className="form-control w-full">
+        <div className="form-control w-full relative">
           <label className="label font-bold text-accent">Password</label>
           <input
-            type="password"
+            type={show ? "text" : "password"}
             placeholder="Min 6 characters"
             className="input input-bordered w-full rounded-xl focus:outline-primary"
             {...register("password", {
@@ -158,6 +160,13 @@ const Register = () => {
               pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
             })}
           />
+          <button
+            type="button"
+            onClick={() => setShow(!show)}
+            className="cursor-pointer absolute right-4 top-1/2"
+          >
+            {show ? <FaEye /> : <FaEyeSlash />}{" "}
+          </button>
           {errors.password?.type === "pattern" && (
             <p className="text-red-500">
               Must have at least one uppercase, at least one lowercase, at least

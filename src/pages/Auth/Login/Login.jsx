@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const {
@@ -15,6 +16,8 @@ const Login = () => {
   const { signInUser, signInWithGoogle, resetPassword } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [show, setShow] = useState(false);
+
   // console.log("in the login page", location);
 
   const handleLogin = (data) => {
@@ -44,7 +47,7 @@ const Login = () => {
   const handleForgotPassword = () => {
     const email = getValues("email");
 
-    navigate("/forgot-password", {state: {email}});
+    navigate("/forgot-password", { state: { email } });
   };
 
   return (
@@ -72,10 +75,10 @@ const Login = () => {
         </div>
 
         {/* Password Field */}
-        <div className="form-control w-full">
+        <div className="form-control w-full relative">
           <label className="label font-bold text-accent">Password</label>
           <input
-            type="password"
+            type={show ? "text" : "password"}
             placeholder="Min 6 characters"
             className="input input-bordered w-full rounded-xl focus:outline-primary"
             {...register("password", {
@@ -83,13 +86,26 @@ const Login = () => {
               minLength: { value: 6, message: "Too short!" },
             })}
           />
+          <button
+            type="button"
+            onClick={() => setShow(!show)}
+            className="cursor-pointer absolute right-4 top-1/2"
+          >
+            {show ? <FaEye /> : <FaEyeSlash />}{" "}
+          </button>
           {errors.password?.type === "minLength" && (
             <p className="text-red-500">{errors.password.message}</p>
           )}
         </div>
 
         <div>
-          <button type="button" onClick={handleForgotPassword} className="link link-hover text-accent font-semibold">Forgot password?</button>
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="link link-hover text-accent font-semibold"
+          >
+            Forgot password?
+          </button>
         </div>
 
         <button
