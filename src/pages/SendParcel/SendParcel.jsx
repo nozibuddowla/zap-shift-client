@@ -382,9 +382,9 @@ const SendParcel = () => {
                 </label>
                 <textarea
                   type="text"
-                  {...register("pickupInstruction")}
+                  {...register("deliveryInstruction")}
                   className="textarea textarea-bordered rounded-xl bg-gray-50/30 h-24"
-                  placeholder="Pickup Instruction"
+                  placeholder="Delivery Instruction"
                 />
               </div>
             </div>
