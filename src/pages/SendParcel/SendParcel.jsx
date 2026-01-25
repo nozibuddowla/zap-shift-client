@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
@@ -23,6 +23,8 @@ const SendParcel = () => {
 
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
   const serviceCenter = useLoaderData();
   const regionsDuplicate = serviceCenter.map((c) => c.region);
   const regions = [...new Set(regionsDuplicate)];
@@ -79,7 +81,10 @@ const SendParcel = () => {
       if (result.isConfirmed) {
         // save the parcel info to the database
         axiosSecure.post("/parcels", finalParcelData).then((res) => {
-          toast.success("Your parcel info received");
+          if (res.data.insertedId) {
+            navigate("/dashboard/my-parcels")
+            toast.success("Your parcel info received");
+          }
         });
       }
     });
