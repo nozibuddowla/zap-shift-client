@@ -4,7 +4,12 @@ import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import LoadingPage from "../../../../components/LoadingPage/LoadingPage";
 import Swal from "sweetalert2";
-import { FaArrowLeft, FaBoxOpen, FaCreditCard, FaShieldAlt } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaBoxOpen,
+  FaCreditCard,
+  FaShieldAlt,
+} from "react-icons/fa";
 
 const Payment = () => {
   const { parcelId } = useParams();
@@ -31,6 +36,8 @@ const Payment = () => {
       parcelId: parcel._id,
       senderEmail: parcel.senderEmail,
       parcelName: parcel.parcelName,
+      successUrl: `${window.location.origin}/dashboard/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancelUrl: `${window.location.origin}/dashboard/payment-cancelled`,
     };
 
     try {
@@ -38,8 +45,12 @@ const Payment = () => {
         "/create-checkout-session",
         paymentInfo,
       );
-      window.location.assign(res.data.url);
+
+      if (res.data.url) {
+        window.location.href = res.data.url;
+      }
     } catch (error) {
+      console.error("Payment error:", error);
       Swal.fire(
         "Error",
         "Something went wrong with the payment gateway.",
