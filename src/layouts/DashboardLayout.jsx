@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo/Logo";
 import { MdDeliveryDining } from "react-icons/md";
-
+import { FaCreditCard } from "react-icons/fa";
 
 const DashboardLayout = () => {
   return (
@@ -85,6 +85,18 @@ const DashboardLayout = () => {
                 <MdDeliveryDining size={24} />
 
                 <span className="is-drawer-close:hidden">My Parcel</span>
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/payment-history"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Payment History"
+              >
+                <FaCreditCard size={20} />
+
+                <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
 

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { MdDelete, MdOutlinePayments } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { FaEdit, FaBoxOpen } from "react-icons/fa";
 import { FaMagnifyingGlass, FaCreditCard } from "react-icons/fa6";
 import Swal from "sweetalert2";
@@ -107,17 +107,17 @@ const MyParcels = () => {
                       </div>
                     </td>
                     <td className="font-semibold text-base-content">
-                      ${parcel.cost}
+                      ৳{parcel.cost}
                     </td>
                     <td>
-                      {parcel.paymentStatus === "paid" ? ( 
+                      {parcel.paymentStatus === "paid" ? (
                         <div className="badge badge-success gap-1 text-white py-3 px-4">
                           <FaCreditCard size={12} /> Paid
                         </div>
                       ) : (
                         <Link to={`/dashboard/payment/${parcel._id}`}>
-                          <button className="btn btn-xs btn-outline btn-primary text-accent gap-1">
-                            <MdOutlinePayments /> Pay Now
+                          <button className="btn btn-outline btn-primary text-accent text-xs md:text-lg gap-1">
+                            Pay Now
                           </button>
                         </Link>
                       )}

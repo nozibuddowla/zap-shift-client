@@ -15,9 +15,10 @@ import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
-import Payment from "../pages/Dashboard/MyParcels/Payment/Payment";
-import PaymentSuccess from "../pages/Dashboard/MyParcels/Payment/PaymentSuccess";
-import PaymentCancelled from "../pages/Dashboard/MyParcels/Payment/PaymentCancelled";
+import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
       {
         path: "payment-cancelled",
         Component: PaymentCancelled,
+      },
+      {
+        path: "payment-history",
+        Component: PaymentHistory,
       },
     ],
   },

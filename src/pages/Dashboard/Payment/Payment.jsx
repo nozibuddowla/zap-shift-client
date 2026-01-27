@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useNavigate, useParams } from "react-router";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import LoadingPage from "../../../../components/LoadingPage/LoadingPage";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import LoadingPage from "../../../components/LoadingPage/LoadingPage";
 import Swal from "sweetalert2";
 import {
   FaArrowLeft,
@@ -39,8 +39,7 @@ const Payment = () => {
       successUrl: `${window.location.origin}/dashboard/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${window.location.origin}/dashboard/payment-cancelled`,
     };
-    console.log(paymentInfo);
-    
+    // console.log(paymentInfo);
 
     try {
       const res = await axiosSecure.post(
@@ -48,8 +47,8 @@ const Payment = () => {
         paymentInfo,
       );
 
-      console.log(res.data);
-      
+      // console.log(res.data);
+
       if (res.data.url) {
         window.location.href = res.data.url;
       }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import LoadingPage from "../../../../components/LoadingPage/LoadingPage";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import LoadingPage from "../../../components/LoadingPage/LoadingPage";
 import { FaCheckCircle, FaReceipt, FaTruck } from "react-icons/fa";
 
 const PaymentSuccess = () => {
