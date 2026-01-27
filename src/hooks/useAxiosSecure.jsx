@@ -5,7 +5,10 @@ const axiosSecure = axios.create({
   // baseURL: "https://zap-shift-server-five-bay.vercel.app",
 
   // baseURL: "http://localhost:3000",
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL:
+    window.location.hostname === "localhost"
+      ? "http://localhost:3000"
+      : "https://zap-shift-server-five-bay.vercel.app",
 });
 
 const useAxiosSecure = () => {
