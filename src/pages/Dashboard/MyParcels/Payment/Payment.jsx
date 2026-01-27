@@ -39,6 +39,8 @@ const Payment = () => {
       successUrl: `${window.location.origin}/dashboard/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${window.location.origin}/dashboard/payment-cancelled`,
     };
+    console.log(paymentInfo);
+    
 
     try {
       const res = await axiosSecure.post(
@@ -46,6 +48,8 @@ const Payment = () => {
         paymentInfo,
       );
 
+      console.log(res.data);
+      
       if (res.data.url) {
         window.location.href = res.data.url;
       }
