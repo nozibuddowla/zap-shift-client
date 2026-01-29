@@ -111,8 +111,8 @@ const MyParcels = () => {
                     </td>
                     <td>
                       {parcel.paymentStatus === "paid" ? (
-                        <div className="badge badge-success gap-1 text-white py-3 px-4">
-                          <FaCreditCard size={12} /> Paid
+                        <div className="badge badge-primary gap-1 text-accent py-3 px-4">
+                          Paid
                         </div>
                       ) : (
                         <Link to={`/dashboard/payment/${parcel._id}`}>

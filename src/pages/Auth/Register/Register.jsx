@@ -8,6 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
   const {
@@ -22,6 +23,7 @@ const Register = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [show, setShow] = useState(false);
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
 
   // console.log("in register", location);
 
@@ -36,21 +38,27 @@ const Register = () => {
       const formData = new FormData();
       formData.append("image", imageFile);
 
-      const res = await axios.post(hosting_url, formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(hosting_url, formData);
 
       if (res.data.success) {
         const photoURL = res.data.data.display_url;
 
-        const result = await registerUser(data.email, data.password);
+        await registerUser(data.email, data.password);
 
         await updateUserProfile(data.name, photoURL);
 
-        toast.success("Account created successfully!");
-        navigate(location.state || "/");
+        const userInfo = {
+          email: data.email,
+          displayName: data.name,
+          photoURL: photoURL,
+        };
+
+        const dbRes = await axiosSecure.post("/users", userInfo);
+        if (dbRes.data.insertedId) {
+          // console.log("user created in the database");
+          toast.success("Account created successfully!");
+          navigate(location.state || "/");
+        }
       } else {
         throw new Error("Image upload failed");
       }
@@ -62,12 +70,23 @@ const Register = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    signInWithGoogle()
-      .then(() => {
-        navigate("/");
-      })
-      .catch((err) => console.log(err));
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const userInfo = {
+        email: result.user?.email,
+        displayName: result.user?.displayName,
+        photoURL: result.user?.photoURL,
+      };
+
+      await axiosSecure.post("/users", userInfo);
+
+      toast.success("Logged in with Google!");
+      navigate(location.state || "/");
+    } catch (error) {
+      console.error("Google login error:", err);
+      toast.error("Failed to login with Google");
+    }
   };
 
   return (

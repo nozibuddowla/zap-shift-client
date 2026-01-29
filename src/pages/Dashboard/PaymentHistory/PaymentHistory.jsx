@@ -15,6 +15,34 @@ const PaymentHistory = () => {
       return res.data;
     },
   });
+
+  const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    const userLocale = navigator.language || "en-US";
+
+    const formattedDate = date.toLocaleDateString(userLocale, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+
+    const formattedTime = date.toLocaleDateString(userLocale, {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    const diffHours = Math.floor((new Date() - date) / 3600000);
+    const isRecent = diffHours < 24;
+
+    return {
+      date: formattedDate,
+      time: formattedTime,
+      full: `${formattedDate} at ${formattedTime}`,
+      isRecent,
+    };
+  };
+
   return (
     <div className="p-6 bg-base-100 min-h-screen">
       <div className="mb-6 flex items-center gap-3">
@@ -50,32 +78,53 @@ const PaymentHistory = () => {
                 </td>
               </tr>
             ) : (
-              payments.map((payment, index) => (
-                <tr key={payment._id}>
-                  <th>{index + 1}</th>
-                  <td>
-                    <div className="font-bold">{payment.parcelName}</div>
-                    <div className="text-xs opacity-50 font-mono">
-                      Tracking: {payment.trackingId || "N/A"}
-                    </div>
-                  </td>
-                  <td className="font-mono text-sm">{payment.transactionId}</td>
-                  <td className="font-semibold text-success">
-                    ${payment.amount}
-                  </td>
-                  <td>
-                    <div className="flex items-center gap-2 text-xs">
-                      <FaRegCalendarAlt />
-                      {new Date(payment.paidAt).toLocaleDateString()}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="badge badge-success badge-outline">
-                      {payment.paymentStatus}
-                    </div>
-                  </td>
-                </tr>
-              ))
+              payments.map((payment, index) => {
+                const dateTime = formatDateTime(payment.paidAt);
+                return (
+                  <tr key={payment._id}>
+                    <th>{index + 1}</th>
+                    <td>
+                      <div className="font-bold">{payment.parcelName}</div>
+                      <div className="text-xs opacity-50 font-mono">
+                        Tracking: {payment.trackingId || "N/A"}
+                      </div>
+                    </td>
+                    <td className="font-mono text-sm">
+                      {payment.transactionId}
+                    </td>
+                    <td className="font-semibold text-success">
+                      ৳{payment.amount}
+                    </td>
+                    <td>
+                      <div className="flex items-center gap-2 text-xs">
+                        <div className="flex flex-col gap-1">
+                          <div
+                            className={`flex items-center gap-2 text-sm font-bold ${
+                              dateTime.isRecent ? "text-primary" : ""
+                            }`}
+                          >
+                            <FaRegCalendarAlt />
+                            {dateTime.date}
+                          </div>
+                          <div className="text-xs opacity-60">
+                            {dateTime.time}
+                          </div>
+                          {dateTime.isRecent && (
+                            <div className="badge badge-xs badge-primary text-accent">
+                              New
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="badge badge-primary text-accent">
+                        {payment.paymentStatus}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>

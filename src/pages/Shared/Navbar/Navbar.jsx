@@ -126,7 +126,7 @@ const Navbar = () => {
           {user ? (
             <button
               onClick={handleLogOut}
-              className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 hidden sm:flex border-none"
+              className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 border-none"
             >
               Logout
             </button>
@@ -134,7 +134,7 @@ const Navbar = () => {
             <div className="flex items-center gap-1 sm:gap-3">
               <NavLink
                 to="/signin"
-                className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 hidden sm:flex border-none"
+                className="btn btn-ghost btn-sm sm:btn-md rounded-full px-4 border-none"
               >
                 Sign In
               </NavLink>
